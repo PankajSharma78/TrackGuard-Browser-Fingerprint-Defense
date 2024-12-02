@@ -73,24 +73,4 @@ TrackGuard is an advanced browser extension designed to identify, mitigate, and 
 
 ---
 
-## **🛠️ Usage**
-
-1. After installation, click on the TrackGuard icon in your browser toolbar.  
-2. Enable real-time monitoring and customize settings as needed.  
-3. View detailed reports under the "Logs" section to analyze tracking activity.  
-4. Stay informed with live alerts for suspicious tracking attempts.  
-
----
-
-## **🎯 Roadmap**
-
-- ✅ Add granular alert thresholds  
-- ✅ Optimize tracker detection algorithms  
-- ⬜ Integrate advanced machine learning-based tracking detection  
-- ⬜ Build a cloud-based dashboard for multi-device analytics  
-- ⬜ Support for additional browsers like Firefox and Edge  
-
-
----
-
 **TrackGuard** – Enhancing Digital Privacy, One Click at a Time. 🌐  
