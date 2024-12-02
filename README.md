@@ -56,9 +56,7 @@ TrackGuard is an advanced browser extension designed to identify, mitigate, and 
 - **Utilities & Libraries**:  
   - Browser-specific APIs for enhanced functionality (e.g., `chrome.webRequest`, `chrome.storage`)  
   - Blocklist Management with EasyPrivacy or similar lists  
-- **Testing**:  
-  - Jest, Puppeteer for automation testing  
-  - Artillery for load testing on script-heavy sites  
+
 
 ---
 
