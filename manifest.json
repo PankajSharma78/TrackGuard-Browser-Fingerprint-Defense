@@ -31,6 +31,7 @@
       "resources": [
         "featureTrackers/behaviorTracker.js", 
         "featureTrackers/systemBrowserTracker.js",
+        "featureTrackers/webglCanvasTracker.js",
         "featureTrackers/main.js"
       ],
       "matches": ["<all_urls>"]
