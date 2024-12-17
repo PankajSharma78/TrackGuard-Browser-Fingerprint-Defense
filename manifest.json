@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "TrackGuard",
+  "version": "1.0",
+  "description": "TrackGuard is a browser extension designed to monitor fingerprinting techniques.",
+  "icons": {
+    "16": "images/logo.png",
+    "48": "images/logo.png",
+    "128": "images/logo.png"
+  },
+  "permissions": [
+    "scripting", 
+    "tabs", 
+    "storage", 
+    "activeTab", 
+    "webNavigation"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["featureTrackers/main.js"],
+      "type": "module"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "featureTrackers/behaviorTracker.js", 
+        "featureTrackers/systemBrowserTracker.js",
+        "featureTrackers/main.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
