@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackGuard</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Track Guard</h1>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+    <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+        <mask class="moon" id="moon-mask">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <circle cx="24" cy="10" r="6" fill="black" />
+        </mask>
+        <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+        <g class="sun-beams" stroke="currentColor">
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </g>
+    </svg>
+</button>
+    </div>
+
+    <div class="body">
+        <div class="monitoring-section">
+            <h2>Monitoring Summary</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fingerprinting Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="behavioralTrackingRow" style="display: none;">
+                        <td>Behavioral Tracking</td>
+                        <td><span class="status success">!</span>
+                            <div class="dropdown" id="behavioralDetails" style="display: none;">
+                                <div><span class="key">Mouse Move:</span> <span class="value"></span></div>
+                                <div><span class="key">Scroll:</span> <span class="value"></span></div>
+                                <div><span class="key">Click:</span> <span class="value"></span></div>
+                            </div>
+                                       
+                        </td>
+                    </tr>
+                    <tr id="systemBrowserRow" style="display: none;">
+                        <td>System and Browser Details</td>
+                        <td><span class="status success">!</span>
+                                <div class="dropdown" id="systemDetails" style="display: none;">
+                                    <div><span class="key">User-Agent:</span> <span class="value"></span></div>
+                                    <div><span class="key">Plugins:</span> <span class="value"></span></div>
+                                    <div><span class="key">Screen Info:</span> <span class="value"></span></div>
+                                    <div><span class="key">Cookies:</span> <span class="value"></span></div>
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
+
