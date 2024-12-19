@@ -4,7 +4,7 @@ export function detectSystemBrowserTracking() {
     const trackingResults = {
         userAgent: { found: false, value: null, isSuspicious: false },
         plugins: { found: false, value: null, isSuspicious: false },
-        screen: { found: false, value: null, isSuspicious: false },
+        screen: { found: false, value: null, isSuspicious: false, accessed: false },
         networkRequests: { found: false, details: [], isSuspicious: false },
         cookies: { found: false, details: [], isSuspicious: false },
         scripts: { found: false, details: [], isSuspicious: false }
@@ -26,9 +26,7 @@ export function detectSystemBrowserTracking() {
         if (suspiciousUserAgentPatterns.some(pattern => pattern.test(navigator.userAgent))) {
             trackingResults.userAgent.isSuspicious = true;
         }
-    }
 
-    if (trackingResults.userAgent.isSuspicious) {
         trackingResults.userAgent.found = true;
     }
 
@@ -41,13 +39,11 @@ export function detectSystemBrowserTracking() {
         if (trackingResults.plugins.value.some(plugin => suspiciousPlugins.includes(plugin))) {
             trackingResults.plugins.isSuspicious = true;
         }
-    }
 
-    if (trackingResults.plugins.isSuspicious) {
         trackingResults.plugins.found = true;
     }
 
-    // Check for screen details
+    // Check for screen details access
     const originalScreenWidth = Object.getOwnPropertyDescriptor(window.screen, 'width');
     const originalScreenHeight = Object.getOwnPropertyDescriptor(window.screen, 'height');
     const originalScreenColorDepth = Object.getOwnPropertyDescriptor(window.screen, 'colorDepth');
@@ -55,6 +51,7 @@ export function detectSystemBrowserTracking() {
     if (originalScreenWidth) {
         Object.defineProperty(window.screen, 'width', {
             get() {
+                trackingResults.screen.accessed = true;
                 console.log("Accessed window.screen.width");
                 return originalScreenWidth.get.apply(this);
             }
@@ -64,6 +61,7 @@ export function detectSystemBrowserTracking() {
     if (originalScreenHeight) {
         Object.defineProperty(window.screen, 'height', {
             get() {
+                trackingResults.screen.accessed = true;
                 console.log("Accessed window.screen.height");
                 return originalScreenHeight.get.apply(this);
             }
@@ -73,19 +71,19 @@ export function detectSystemBrowserTracking() {
     if (originalScreenColorDepth) {
         Object.defineProperty(window.screen, 'colorDepth', {
             get() {
+                trackingResults.screen.accessed = true;
                 console.log("Accessed window.screen.colorDepth");
                 return originalScreenColorDepth.get.apply(this);
             }
         });
     }
 
+    // Check if the screen size or resolution is suspicious
     if (window.screen.width < 1024 || window.screen.height < 768 || window.screen.colorDepth !== 24) {
         trackingResults.screen.isSuspicious = true;
     }
 
-    if (trackingResults.screen.isSuspicious) {
-        trackingResults.screen.found = true;
-    }
+    trackingResults.screen.found = true;
 
     // Check for outgoing network requests (Fetch API)
     const originalFetch = window.fetch;
@@ -105,14 +103,12 @@ export function detectSystemBrowserTracking() {
             trackingResults.networkRequests.isSuspicious = true;
         }
 
+        trackingResults.networkRequests.found = true;
+
         return originalFetch.apply(this, args);
     };
 
-    if (trackingResults.networkRequests.isSuspicious) {
-        trackingResults.networkRequests.found = true;
-    }
-
-    // Check for cookies usage
+    // Monitor cookies access
     const originalCookie = Object.getOwnPropertyDescriptor(document, 'cookie');
     if (originalCookie) {
         const originalCookieGetter = originalCookie.get;
@@ -136,15 +132,13 @@ export function detectSystemBrowserTracking() {
             /_ga=/, // Google Analytics
             /_fbp=/, // Facebook Pixel
             /_gid=/, // Google Analytics ID
-            /ads=/, // Advertising cookies
+            /ads=/ // Advertising cookies
         ];
 
         if (suspiciousCookiePatterns.some(pattern => document.cookie.match(pattern))) {
             trackingResults.cookies.isSuspicious = true;
         }
-    }
 
-    if (trackingResults.cookies.isSuspicious) {
         trackingResults.cookies.found = true;
     }
 
@@ -173,9 +167,6 @@ export function detectSystemBrowserTracking() {
         });
 
         trackingResults.scripts.isSuspicious = true;
-    }
-
-    if (trackingResults.scripts.isSuspicious) {
         trackingResults.scripts.found = true;
     }
 
