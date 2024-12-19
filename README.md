@@ -5,6 +5,10 @@ TrackGuard is an advanced browser extension designed to identify, mitigate, and 
 
 ---
 
+## **Screenshots**
+
+![Demo Screenshot]()
+
 ## **🌟 Features**
 
 ### 🔍 **Comprehensive Detection Capabilities**
