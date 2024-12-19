@@ -1,66 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrackGuard</title>
     <link rel="stylesheet" href="popup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div class="header">
         <h1>Track Guard</h1>
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-    <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-        <mask class="moon" id="moon-mask">
-            <rect x="0" y="0" width="100%" height="100%" fill="white" />
-            <circle cx="24" cy="10" r="6" fill="black" />
-        </mask>
-        <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
-        <g class="sun-beams" stroke="currentColor">
-            <line x1="12" y1="1" x2="12" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="23" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            <line x1="1" y1="12" x2="3" y2="12" />
-            <line x1="21" y1="12" x2="23" y2="12" />
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-        </g>
-    </svg>
-</button>
+            <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+                <mask class="moon" id="moon-mask">
+                    <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                    <circle cx="24" cy="10" r="6" fill="black" />
+                </mask>
+                <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+                <g class="sun-beams" stroke="currentColor">
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </g>
+            </svg>
+        </button>
+
     </div>
 
     <div class="body">
         <div class="monitoring-section">
             <h2>Monitoring Summary</h2>
+
             <table class="table">
                 <thead>
                     <tr>
                         <th>Fingerprinting Type</th>
-                        <th>Status</th>
+                        <th>Status of <div id="websiteName"> </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="behavioralTrackingRow" style="display: none;">
                         <td>Behavioral Tracking</td>
-                        <td><span class="status success">!</span>
+                        <td>
+                            <span class="status success">!</span>
                             <div class="dropdown" id="behavioralDetails" style="display: none;">
-                                <div><span class="key">Mouse Move:</span> <span class="value"></span></div>
-                                <div><span class="key">Scroll:</span> <span class="value"></span></div>
-                                <div><span class="key">Click:</span> <span class="value"></span></div>
+                                <!-- Dynamic details for behavioral tracking -->
                             </div>
-                                       
                         </td>
                     </tr>
                     <tr id="systemBrowserRow" style="display: none;">
                         <td>System and Browser Details</td>
-                        <td><span class="status success">!</span>
-                                <div class="dropdown" id="systemDetails" style="display: none;">
-                                    <div><span class="key">User-Agent:</span> <span class="value"></span></div>
-                                    <div><span class="key">Plugins:</span> <span class="value"></span></div>
-                                    <div><span class="key">Screen Info:</span> <span class="value"></span></div>
-                                    <div><span class="key">Cookies:</span> <span class="value"></span></div>
-                                </div>
+                        <td>
+                            <span class="status success">!</span>
+                            <div class="dropdown" id="systemDetails" style="display: none;">
+                                <!-- Dynamic details for system/browser tracking -->
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="audioFingerprintingRow" style="display: none;">
+                        <td>Audio Fingerprinting</td>
+                        <td>
+                            <span class="status success">!</span>
+                            <div class="dropdown" id="audioDetails" style="display: none;">
+                                <!-- Dynamic details for audio fingerprinting -->
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="fontFingerprintingRow" style="display: none;">
+                        <td>Font Fingerprinting</td>
+                        <td>
+                            <span class="status success">!</span>
+                            <div class="dropdown" id="fontDetails" style="display: none;">
+                                <!-- Dynamic details for font fingerprinting -->
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="webglCanvasRow" style="display: none;">
+                        <td>WebGL/Canvas Fingerprinting</td>
+                        <td>
+                            <span class="status success">!</span>
+                            <div class="dropdown" id="webglCanvasDetails" style="display: none;">
+                                <!-- Dynamic details for WebGL/Canvas fingerprinting -->
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -68,6 +101,12 @@
         </div>
     </div>
 
+    <div id="safeMessage"
+        style="display: none; text-align: center; margin-top: 20px; font-size: 1.2rem; color: #4CAF50;">
+        Device is Safe, Refresh the page
+    </div>
+
     <script src="popup.js"></script>
 </body>
+
 </html>
