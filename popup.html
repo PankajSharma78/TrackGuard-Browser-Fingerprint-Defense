@@ -35,19 +35,19 @@
                 </g>
             </svg>
         </button>
-
     </div>
-
+    
     <div class="body">
         <div class="monitoring-section">
-            <h2>Monitoring Summary</h2>
+            <h2>Monitoring Summary   <span class="status-label non-critical">Non-Critical</span>
+                <span class="status-label critical">Critical</span>
+            </h2>
 
             <table class="table">
                 <thead>
                     <tr>
                         <th>Fingerprinting Type</th>
-                        <th>Status of <div id="websiteName"> </div>
-                        </th>
+                        <th>Status of <div id="websiteName"> </div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +58,7 @@
                             <div class="dropdown" id="behavioralDetails" style="display: none;">
                                 <!-- Dynamic details for behavioral tracking -->
                             </div>
+                            <div class="suspicious-status" id="behavioralStatus" style="display: none;"></div>
                         </td>
                     </tr>
                     <tr id="systemBrowserRow" style="display: none;">
@@ -67,6 +68,7 @@
                             <div class="dropdown" id="systemDetails" style="display: none;">
                                 <!-- Dynamic details for system/browser tracking -->
                             </div>
+                            <div class="suspicious-status" id="systemStatus" style="display: none;"></div>
                         </td>
                     </tr>
                     <tr id="audioFingerprintingRow" style="display: none;">
@@ -76,6 +78,7 @@
                             <div class="dropdown" id="audioDetails" style="display: none;">
                                 <!-- Dynamic details for audio fingerprinting -->
                             </div>
+                            <div class="suspicious-status" id="audioStatus" style="display: none;"></div>
                         </td>
                     </tr>
                     <tr id="fontFingerprintingRow" style="display: none;">
@@ -85,6 +88,7 @@
                             <div class="dropdown" id="fontDetails" style="display: none;">
                                 <!-- Dynamic details for font fingerprinting -->
                             </div>
+                            <div class="suspicious-status" id="fontStatus" style="display: none;"></div>
                         </td>
                     </tr>
                     <tr id="webglCanvasRow" style="display: none;">
@@ -94,6 +98,7 @@
                             <div class="dropdown" id="webglCanvasDetails" style="display: none;">
                                 <!-- Dynamic details for WebGL/Canvas fingerprinting -->
                             </div>
+                            <div class="suspicious-status" id="webglCanvasStatus" style="display: none;"></div>
                         </td>
                     </tr>
                 </tbody>
