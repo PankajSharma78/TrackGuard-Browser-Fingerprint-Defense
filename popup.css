@@ -22,11 +22,11 @@
 [data-theme="dark"] {
     --background-color: #1a1a1a;
     --text-color: #ffffff;
-    --header-bg: #0a4a8f;
+    --header-bg: #5a0799;
     --header-text: #ffffff;
     --table-bg: #2a2a2a;
     --table-border: #444444;
-    --th-bg: #0a4a8f;
+    --th-bg: #5a0799;
     --th-text: #ffffff;
     --td-bg: #2a2a2a;
     --td-text: #ffffff;
@@ -41,7 +41,8 @@
 }
 
 body {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+    font-family:'Poppins';
     margin: 0;
     padding: 30px;
     background-color: var(--background-color);
@@ -50,11 +51,12 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     width: 500px;  
     box-sizing: border-box;
     font-weight: 500;
     transition: background-color 0.3s, color 0.3s;
+    max-height: 100%; /* Prevent overflow clipping */
+    overflow-y: auto; /* Allow scrolling when content overflows */
 }
 
 .header {
@@ -125,7 +127,7 @@ td {
     border-radius: 50%;
     padding: 5px 10px;
     color: #fff;
-    height: 18px;
+    height: 22px;
     cursor: pointer;
 }
 
@@ -212,6 +214,7 @@ td {
     margin-left: 10px;
     color: var(--td-text);
 }
+
 
 .theme-toggle {
     background: none;
@@ -304,3 +307,5 @@ td {
         transition-delay: 0.25s;
     }
 }
+
+
