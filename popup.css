@@ -120,8 +120,29 @@ td {
     color: var(--td-text);
 }
 
-.status {
+.status-label {
     display: inline-block;
+    font-size: 0.6rem;
+    padding: 5px 10px;
+    border-radius: 12px;
+    margin-left: 10px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.non-critical {
+    background-color: #00A693; /* Green */
+}
+
+.critical {
+    background-color: red; /* Red */
+}
+
+
+.status {
+ 
     font-size: 1.2rem;
     font-weight: bold;
     border-radius: 50%;
@@ -129,6 +150,8 @@ td {
     color: #fff;
     height: 22px;
     cursor: pointer;
+    visibility: hidden;
+  
 }
 
 .success {
