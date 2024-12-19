@@ -7,9 +7,12 @@ TrackGuard is an advanced browser extension designed to identify, mitigate, and 
 
 ## **Screenshots**
 
+![Demo Screenshot](https://github.com/PankajSharma78/TrackGuard-Browser-Fingerprint-Defense/blob/main/images/Screenshot%20(748).png)
+
 ![Demo Screenshot](https://github.com/PankajSharma78/TrackGuard-Browser-Fingerprint-Defense/blob/main/images/Screenshot%20(744).png)
+
 ![Demo Screenshot](https://github.com/PankajSharma78/TrackGuard-Browser-Fingerprint-Defense/blob/main/images/Screenshot%20(745).png)
-![Demo Screenshot](https://github.com/PankajSharma78/TrackGuard-Browser-Fingerprint-Defense/blob/main/images/Screenshot%20(746).png)
+
 
 ## **🌟 Features**
 
