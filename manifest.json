@@ -32,6 +32,7 @@
         "featureTrackers/behaviorTracker.js", 
         "featureTrackers/systemBrowserTracker.js",
         "featureTrackers/webglCanvasTracker.js",
+        "featureTrackers/audioFontTracker.js",
         "featureTrackers/main.js"
       ],
       "matches": ["<all_urls>"]
