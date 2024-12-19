@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const themeToggle = document.getElementById("theme-toggle");
-    
+
     // Function to set the theme
     function setTheme(theme) {
         document.body.setAttribute("data-theme", theme);
@@ -22,9 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const port = chrome.runtime.connect({ name: "popup-connection" });
 
     port.onMessage.addListener((message) => {
+        console.log("message: ",message)
         if (message.type === "update_popup") {
-            updatePopup(message.trackers);
+            updatePopup(message.trackers,message.websiteName);// Include website name
         }
+    });
+
+    
+    // Reset popup when switching tabs
+    chrome.tabs.onActivated.addListener(() => {
+        resetPopup();
     });
 
     // Log connection status
@@ -32,27 +39,42 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Disconnected from background script.");
     });
 });
+function updatePopup(trackers,websiteName) {
+    console.log(websiteName)
+    const safeMessageElement = document.getElementById("safeMessage");
+    const monitoringTable = document.querySelector(".table-container");
 
-function updatePopup(trackers) {
     // Handle Behavioral Tracking
     const behavioralRow = document.getElementById("behavioralTrackingRow");
     const behavioralDetails = document.getElementById("behavioralDetails");
+    const websiteElement = document.getElementById("websiteName");
+    
+    if (websiteElement) {
+        websiteElement.textContent = `${websiteName}`;
+    }
+
+
+    let hasTrackers = false;
+
 
     if (trackers?.behavior) {
         const { mousemove, scroll, click } = trackers.behavior;
 
         if (mousemove?.found || scroll?.found || click?.found) {
+            hasTrackers = true;
             behavioralRow.style.display = "table-row";
             behavioralDetails.style.display = "block";
 
-            // Populate the dropdown
-            behavioralDetails.innerHTML = ""; // Clear old content
+            // Populate details
+            behavioralDetails.innerHTML = "";
             if (mousemove?.found) behavioralDetails.innerHTML += `<div><span class="key">Mouse Move:</span> <span class="value">Detected</span></div>`;
             if (scroll?.found) behavioralDetails.innerHTML += `<div><span class="key">Scroll:</span> <span class="value">Detected</span></div>`;
             if (click?.found) behavioralDetails.innerHTML += `<div><span class="key">Click:</span> <span class="value">Detected</span></div>`;
         } else {
             behavioralRow.style.display = "none";
         }
+    } else {
+        behavioralRow.style.display = "none";
     }
 
     // Handle System and Browser Details Tracking
@@ -63,11 +85,12 @@ function updatePopup(trackers) {
         const { userAgent, plugins, screen, networkRequests, cookies } = trackers.systemBrowser;
 
         if (userAgent?.found || plugins?.found || screen?.found || networkRequests?.found || cookies?.found) {
+            hasTrackers = true;
             systemRow.style.display = "table-row";
             systemDetails.style.display = "block";
 
-            // Populate the dropdown
-            systemDetails.innerHTML = ""; // Clear old content
+            // Populate details
+            systemDetails.innerHTML = "";
             if (userAgent?.found) systemDetails.innerHTML += `<div><span class="key">User-Agent:</span> <span class="value">${userAgent.value}</span></div>`;
             if (plugins?.found) systemDetails.innerHTML += `<div><span class="key">Plugins:</span> <span class="value">${plugins.value.join(", ")}</span></div>`;
             if (screen?.found) systemDetails.innerHTML += `<div><span class="key">Screen Info:</span> <span class="value">${screen.value.width}x${screen.value.height}, ${screen.value.colorDepth}-bit</span></div>`;
@@ -76,5 +99,84 @@ function updatePopup(trackers) {
         } else {
             systemRow.style.display = "none";
         }
+    } else {
+        systemRow.style.display = "none";
     }
+
+    // Handle Audio Fingerprinting
+    const audioRow = document.getElementById("audioFingerprintingRow");
+    const audioDetails = document.getElementById("audioDetails");
+
+    if (trackers?.audioFont?.audio?.found) {
+        hasTrackers = true;
+        audioRow.style.display = "table-row";
+        audioDetails.style.display = "block";
+
+        // Populate details
+        audioDetails.innerHTML = trackers.audioFont.audio.details.map(detail => `<div>${detail}</div>`).join("");
+    } else {
+        audioRow.style.display = "none";
+    }
+
+    // Handle Font Fingerprinting
+    const fontRow = document.getElementById("fontFingerprintingRow");
+    const fontDetails = document.getElementById("fontDetails");
+
+    if (trackers?.audioFont?.fonts?.found) {
+        hasTrackers = true;
+        fontRow.style.display = "table-row";
+        fontDetails.style.display = "block";
+
+        // Populate details
+        fontDetails.innerHTML = trackers.audioFont.fonts.details.map(detail => `<div>${detail}</div>`).join("");
+    } else {
+        fontRow.style.display = "none";
+    }
+
+    // Handle WebGL/Canvas Fingerprinting
+    const webglCanvasRow = document.getElementById("webglCanvasRow");
+    const webglCanvasDetails = document.getElementById("webglCanvasDetails");
+
+    if (trackers?.webglCanvas) {
+        const { canvas, webgl } = trackers.webglCanvas;
+
+        if (canvas?.found || webgl?.found) {
+            hasTrackers = true;
+            webglCanvasRow.style.display = "table-row";
+            webglCanvasDetails.style.display = "block";
+
+            // Populate details
+            webglCanvasDetails.innerHTML = "";
+            if (canvas?.found) webglCanvasDetails.innerHTML += `<div><span class="key">Canvas:</span> <span class="value">Detected</span></div>`;
+            if (webgl?.found) webglCanvasDetails.innerHTML += `<div><span class="key">WebGL:</span> <span class="value">Detected</span></div>`;
+        } else {
+            webglCanvasRow.style.display = "none";
+        }
+    } else {
+        webglCanvasRow.style.display = "none";
+    }
+
+    // Update safe message visibility
+    if (hasTrackers) {
+        safeMessageElement.style.display = "none";
+        monitoringTable.style.display = "block";
+    } else {
+        safeMessageElement.style.display = "block";
+        monitoringTable.style.display = "none";
+    }
+}
+
+function resetPopup() {
+    const behavioralRow = document.getElementById("behavioralTrackingRow");
+    const systemRow = document.getElementById("systemBrowserRow");
+    const safeMessageElement = document.getElementById("safeMessage");
+    const monitoringTable = document.querySelector(".table-container");
+
+    // Reset rows
+    behavioralRow.style.display = "none";
+    systemRow.style.display = "none";
+
+    // Hide table and show safe message
+    safeMessageElement.style.display = "block";
+    monitoringTable.style.display = "none";
 }
